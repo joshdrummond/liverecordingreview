@@ -263,6 +263,7 @@
 		<echo message = "   list     --> lists currently running webapps (Tomcat)"/>
 		<echo message = "   reload   --> reloads webapp in container (Tomcat)"/>
 		<echo message = "   remove   --> undeploys webapp from container (Tomcat)"/>
+		<echo message = "   reinstall--> conveniently calls 'remove' then 'install' (Tomcat)"/>
 		<echo message = ""/>
 		<echo message = "-------------------------------------------------------------"/>
 		<echo message = ""/>  
@@ -544,6 +545,19 @@
              path="${app.path}"/>
 
   </target>
+
+
+<!-- ==================== Reinstall Target =================================== -->
+
+<!--
+
+  The "reinstall" target simply invokes the "remove" then "install" targets
+  for convenience.
+
+-->
+
+  <target name="reinstall" depends="remove,install" 
+   description="Remove then Install application on servlet container"/>
 
 
 </project>
