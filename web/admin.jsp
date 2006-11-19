@@ -4,7 +4,7 @@
 <%
    String strClientIP = request.getRemoteAddr();
    System.out.println(strClientIP);
-   if (!strClientIP.equals("192.168.1.1"))
+   if (false) //(!strClientIP.equals("192.168.1.1"))
    {
       out.write("ACCESS DENIED");
    }
@@ -31,7 +31,7 @@
       }
       else if ("2".equals(admintype))
       {
-         if (BootlegBean.recalculateBootlegScore(request.getParameter("rec_id")))
+         if (BootlegBean.recalculateBootlegScore(Integer.parseInt(request.getParameter("rec_id"))))
          {
             status="success!";
          }
@@ -69,7 +69,7 @@
          }
          else
          {
-            List recording = BootlegBean.getBootleg(recId);
+            List recording = BootlegBean.getRecording(Integer.parseInt(recId));
             if (recording.size() != 1)
             {
                response.sendRedirect("admin.jsp");
@@ -84,11 +84,11 @@
                String recInfo = (String)recording.get(6);
 ////// MODIFY RECORDING INFO PAGE
 %>
-<%@ include file="header.inc"%>
+<%@ include file="/WEB-INF/jsp/include/header.jspf"%>
 
 <h3>Admin Page</h3>
-<br>
-<br>
+<br/>
+<br/>
 <table bgcolor=#FFB5E7 width=70% border=1>
 	<tr>
 		<td align=left><b>Modify Recording - Garbage</b></td>
@@ -103,7 +103,7 @@
 				<td>Category:</td>
 				<td><select name=cat_id>
 					<%
-					                                List cats = BootlegBean.getCategories("1"); //fixme Garbage band_id
+					                                List cats = BootlegBean.getCategories(1); //fixme Garbage band_id
 					                                for (int i = 0; i < cats.size(); i++)
 					                                {
 					                                    List row = (List) cats.get(i);
@@ -112,7 +112,7 @@
 					                                    String selected = cId.equals(catId) ? "selected"
 					                                            : "";
 					%>
-					<option value="<%=cId%>" selected=<%=selected%>><%=cDesc%></option>
+					<option value="<%=cId%>" selected="<%=selected%>"><%=cDesc%></option>
 					<%
 					}
 					%>
@@ -121,8 +121,8 @@
 			<tr>
 				<td>Type:</td>
 				<td><select name=type>
-					<option value="A" <%="A".equals(recType) ? "selected" : ""%>>Audio</option>
-					<option value="V" <%="V".equals(recType) ? "selected" : ""%>>Video</option>
+					<option value="A" selected=<%="A".equals(recType) ? "selected" : ""%>>Audio</option>
+					<option value="V" selected=<%="V".equals(recType) ? "selected" : ""%>>Video</option>
 				</select></td>
 			</tr>
 			<tr>
@@ -147,7 +147,7 @@
 	</tr>
 </table>
 
-<%@ include file="footer.inc"%>
+<%@ include file="/WEB-INF/jsp/include/footer.jspf"%>
 
 <%
                         }
@@ -159,12 +159,12 @@
                 {
                     ///////////// DEFAULT ADMIN PAGE
 %>
-<%@ include file="header.inc"%>
+<%@ include file="/WEB-INF/jsp/include/header.jspf"%>
 
 <h3>Admin Page</h3>
 <%=status%>
-<br>
-<br>
+<br/>
+<br/>
 <table bgcolor=#FFB5E7 width=70% border=1>
 	<tr>
 		<td align=left><b>Add Recording - Garbage</b></td>
@@ -178,7 +178,7 @@
 				<td>Category:</td>
 				<td><select name=cat_id>
 					<%
-					                    List cats = BootlegBean.getCategories("1"); //fixme Garbage band_id
+					                    List cats = BootlegBean.getCategories(1); //fixme Garbage band_id
 					                    for (int i = 0; i < cats.size(); i++)
 					                    {
 					                        List row = (List) cats.get(i);
@@ -217,8 +217,8 @@
 		</td>
 	</tr>
 </table>
-<br>
-<br>
+<br/>
+<br/>
 <table bgcolor=#FFB5E7 width=70% border=1>
 	<tr>
 		<td align=left><b>Modify Recording - Garbage</b></td>
@@ -232,8 +232,8 @@
 		</td>
 	</tr>
 </table>
-<br>
-<br>
+<br/>
+<br/>
 <table bgcolor=#FFB5E7 width=70% border=1>
 	<tr>
 		<td align=left><b>Recalculate Recording Score</b></td>
@@ -248,7 +248,7 @@
 	</tr>
 </table>
 
-<%@ include file="footer.inc"%>
+<%@ include file="/WEB-INF/jsp/include/footer.jspf"%>
 
 <%
             }
