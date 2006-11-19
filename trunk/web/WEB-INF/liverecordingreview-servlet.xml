@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<bean id="listBandsController" class="com.joshdrummond.liverecordingreview.controller.ListBandsController">
+		<property name="recordingService">
+			<ref bean="recordingService"/>
+		</property>
+	</bean>
+
+	<bean id="listCategoriesController" class="com.joshdrummond.liverecordingreview.controller.ListCategoriesController">
+		<property name="recordingService">
+			<ref bean="recordingService"/>
+		</property>
+	</bean>
+
+	<bean id="listRecordingsController" class="com.joshdrummond.liverecordingreview.controller.ListRecordingsController">
+		<property name="recordingService">
+			<ref bean="recordingService"/>
+		</property>
+	</bean>
+
+	<bean id="listReviewsController" class="com.joshdrummond.liverecordingreview.controller.ListReviewsController">
+		<property name="recordingService">
+			<ref bean="recordingService"/>
+		</property>
+	</bean>
+
+	<bean id="faqController" class="com.joshdrummond.liverecordingreview.controller.FaqController"/>
+	
+	<bean id="reviewValidator" class="com.joshdrummond.liverecordingreview.validator.ReviewValidator"/>
+	
+	<bean id="addReviewController" class="com.joshdrummond.liverecordingreview.controller.AddReviewController">
+		<property name="recordingService">
+			<ref bean="recordingService"/>
+		</property>
+		<property name="formView">
+			<value>addReviewForm</value>
+		</property>
+		<property name="successView">
+			<value>redirect:reviewList.htm</value>
+		</property>
+		<property name="commandName">
+			<value>review</value>
+		</property>
+		<property name="commandClass">
+			<value>com.joshdrummond.liverecordingreview.model.Review</value>
+		</property>
+		<property name="validator">
+			<ref bean="reviewValidator"/>
+		</property>
+	</bean>
+	
+	<bean id="simpleUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/bandList.htm">listBandsController</prop>
+				<prop key="/categoryList.htm">listCategoriesController</prop>
+				<prop key="/recordingList.htm">listRecordingsController</prop>
+				<prop key="/reviewList.htm">listReviewsController</prop>
+				<prop key="/addReview.htm">addReviewController</prop>
+				<prop key="/faq.htm">faqController</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/WEB-INF/jsp/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+</beans>

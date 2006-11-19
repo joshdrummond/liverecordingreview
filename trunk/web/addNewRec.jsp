@@ -24,10 +24,10 @@
             if (showMain)
             {
 %>
-<%@ include file="header.inc"%>
+<%@ include file="/WEB-INF/jsp/include/header.jspf"%>
 <%=status%>
-<br>
-<br>
+<br/>
+<br/>
 <table bgcolor=#FFB5E7 width=70% border=1>
 	<tr>
 		<td align=left><b>Add Recording - Garbage</b></td>
@@ -40,12 +40,11 @@
 				<td>Category:</td>
 				<td><select name=cat_id>
 					<%
-					                List cats = BootlegBean.getCategories("1"); //fixme Garbage band_id
-					                for (int i = 0; i < cats.size(); i++)
+					                List<List<String>> cats = BootlegBean.getCategories(1); //fixme Garbage band_id
+					                for (List row : cats)
 					                {
-					                    List row = (List) cats.get(i);
 					%>
-					<option value="<%=(String)row.get(0)%>"><%=(String) row.get(1)%></option>
+					<option value="<%=row.get(0)%>"><%=row.get(1)%></option>
 					<%
 					}
 					%>
@@ -83,7 +82,7 @@
 </table>
 
 <h4><a href="index.jsp">Back to Index</a></h4>
-<%@ include file="footer.inc"%>
+<%@ include file="/WEB-INF/jsp/include/footer.jspf"%>
 
 <%
 }
