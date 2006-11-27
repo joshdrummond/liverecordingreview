@@ -2,7 +2,7 @@
 
 <table width="40%">
 	<tr>
-		<td align="left"><b><a href="bandList.htm">Home</a> =&gt; ${band.description}</b></td>
+		<td align="left"><b><a href="artistList.htm">Home</a> =&gt; ${artist.description}</b></td>
 	</tr>
 	<tr>
 		<td>

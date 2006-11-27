@@ -11,23 +11,23 @@ public class Category
 {
 
     private int id;
-    private Band band;
+    private Artist artist;
     private String description;
 
     /**
-     * @return the band
+     * @return the artist
      */
-    public Band getBand()
+    public Artist getArtist()
     {
-        return this.band;
+        return this.artist;
     }
 
     /**
-     * @param band the band to set
+     * @param artist the artist to set
      */
-    public void setBand(Band band)
+    public void setArtist(Artist artist)
     {
-        this.band = band;
+        this.artist = artist;
     }
 
     /**

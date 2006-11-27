@@ -10,10 +10,6 @@ import java.text.SimpleDateFormat;
 import java.text.NumberFormat;
 import java.text.DecimalFormat;
 import java.util.*;
-//import java.util.logging.Logger;
-//import java.util.logging.Level;
-//import java.util.logging.FileHandler;
-//import java.util.logging.SimpleFormatter;
 
 
 /*
@@ -58,8 +54,6 @@ public class BootlegBean
    private static String db_login = "recreview";
    private static String db_password = "recreview";
    private static String db_driver = "com.mysql.jdbc.Driver";
-//   private static String logfile = "";
-//   private static Logger logger = null;
 
 
    static
@@ -67,12 +61,6 @@ public class BootlegBean
       try
       {
          Class.forName(db_driver);
-//         logger = Logger.getLogger("com.joshdrummond.bootrating");
-//         logger.setLevel(Level.ALL);
-//         FileHandler handler = new FileHandler("bootleg-rating_log.txt");
-//         handler.setFormatter(new SimpleFormatter());
-//         logger.addHandler(handler);
-
       }
       catch (Exception e)
       {
@@ -81,56 +69,19 @@ public class BootlegBean
    }
 
 
-   public static boolean addBand(String band)
-   {
-      if (!bandExists(band))
-      {
-         return executeSQL("INSERT INTO bands (band_id, description) VALUES (null, '" + band + "')");
-      }
-
-      return false;
-   }
-
-   public static boolean bandExists(String band)
-   {
-      return ((selectSQL("SELECT band_id FROM bands where description = '" + band + "'")).size() > 0);
-   }
-
-   public static boolean addCategory(String category, String band_id)
-   {
-      if (!categoryExists(category, band_id))
-      {
-         return executeSQL("INSERT INTO categories (category_id, band_id, description) VALUES (null, " + band_id + ",'" + category + "')");
-      }
-
-      return false;
-   }
-
-   public static boolean categoryExists(String category, String band_id)
-   {
-      if (isValidInt(band_id))
-      {
-         return ((selectSQL("SELECT category_id FROM categories WHERE description = '" + category + "' AND band_id = " + band_id)).size() > 0);
-      }
-      else
-      {
-         return false;
-      }
-   }
-
-   public static List<List<String>> getBands()
+   public static List<List<String>> getArtists()
    {
       return selectSQL("SELECT b.band_id, b.description FROM bands b ORDER BY b.description");
    }
 
-   public static List<List<String>> getBand(int id)
+   public static List<List<String>> getArtist(int id)
    {
       return selectSQL("SELECT b.description FROM bands b WHERE b.band_id="+id);
    }
    
-   public static List<List<String>> getCategories(int bandId)
+   public static List<List<String>> getCategories(int artistId)
    {
-      return selectSQL("SELECT c.category_id, c.description FROM categories c WHERE c.band_id=" + bandId + " ORDER BY c.description");
+      return selectSQL("SELECT c.category_id, c.description FROM categories c WHERE c.band_id=" + artistId + " ORDER BY c.description");
    }
 
    
@@ -168,45 +119,19 @@ public class BootlegBean
       }
    }
 
-   public static boolean addBootleg(String category_id, String type, String description, String source, String info)
+   public static boolean addRecording(int category_id, char type, String description, String source, String info)
    {
       boolean okay = false;
-
-      if (isValidInt(category_id) && !"".equals(description))
-      {
          description = description.replaceAll("'", "''");
          source = source.replaceAll("'", "''");
          info = info.replaceAll("'", "''");
-   //      if (!bootlegExists(category_id, type, date, description, source))
-   //      {
          okay = executeSQL("INSERT INTO recordings (recording_id, category_id, type, description, source, info, avg_perf_rating, avg_rec_rating, total_reviews, date_created) " +
             "VALUES (null, " + category_id + ", '" + type + "', '" + description + "', '" + source + "', '" + info + "', 0.0, 0.0, 0, NOW())");
-   //      }
-      }
-
       return okay;
-   }
-
-   public static boolean modifyBootleg(String recording_id, String category_id, String type, String description, String source, String info)
-   {
-      if (isValidInt(recording_id) && isValidInt(category_id) && !"".equals(type) && !"".equals(description) && !"".equals(source) && !"".equals(info))
-      {
-         description = description.replaceAll("'", "''");
-         source = source.replaceAll("'", "''");
-         info = info.replaceAll("'", "''");
-         return executeSQL("UPDATE recordings SET category_id = "+category_id+", type = '"+type+"', description = '"+description+
-            "', source='"+source+"', info = '"+info+"' WHERE recording_id = "+recording_id);
-      }
-      else
-      {
-         return false;
-      }
    }
    
    public static boolean addReview(int recording_id, String user_id, int performanceRating, int recordingRating, String notes)
    {
-//      if (!bootlegExists(category_id, type, date, description, source))
-//      {
       boolean okay = false;
       if ( !"".equals(user_id) && !previouslyReviewed(user_id, recording_id))
       {
@@ -216,7 +141,7 @@ public class BootlegBean
             "VALUES (null, " + recording_id + ", '" + user_id + "', " + performanceRating + ", " + recordingRating + ", '" + notes + "', NOW())");
          if (okay)
          {
-            okay = recalculateBootlegScore(recording_id);
+            okay = recalculateRecordingScore(recording_id);
          }
       }
 
@@ -231,20 +156,20 @@ public class BootlegBean
    }
 
 
-   public static boolean recalculateAllBootlegScores()
+   public static boolean recalculateAllRecordingScores()
    {
       boolean allGood = true;
       List results = selectSQL("SELECT recording_id FROM recordings");
       for (Iterator iter = results.iterator(); iter.hasNext(); )
       {
          List row = (List)iter.next();
-         allGood = allGood && recalculateBootlegScore(Integer.parseInt((String)row.get(0)));
+         allGood = allGood && recalculateRecordingScore(Integer.parseInt((String)row.get(0)));
       }
       return allGood;
    }
 
 
-   public static boolean recalculateBootlegScore(int recording_id)
+   public static boolean recalculateRecordingScore(int recording_id)
    {
       boolean okay = false;
 
@@ -274,19 +199,6 @@ public class BootlegBean
 
       return okay;
    }
-
-   /*
-   public static boolean modifyReview(String review_id, String recording_id, String user_id, int performanceRating, int recordingRating, String notes)
-   {
-      return executeSQL("UPDATE reviews SET recording_id = "+recording_id+", user_id='"+user_id+"', performance_rating="+performanceRating+
-         ", recording_rating="+recordingRating+", notes='"+notes+"' WHERE review_id = "+review_id);
-   }
-   
-   public static boolean deleteReview(String review_id)
-   {
-      return executeSQL("DELETE FROM reviews WHERE review_id = "+review_id);
-   }
-   */
 
    public static List getTopReviewers(int iTopCount)
    {
@@ -321,7 +233,6 @@ public class BootlegBean
    
    public static List<List<String>> selectSQL(String strSQL, int maxRows)
    {
-//      logger.fine("SQL: "+strSQL);
       System.out.println("SQL: "+strSQL);
       Connection connection = null;
       List<List<String>> results = new ArrayList<List<String>>();
@@ -371,7 +282,6 @@ public class BootlegBean
 
    public static boolean executeSQL(String strSQL)
    {
-//      logger.fine("SQL: "+strSQL);
       System.out.println("SQL: "+strSQL);
       Connection connection = null;
       boolean okay = true;

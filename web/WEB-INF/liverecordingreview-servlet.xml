@@ -3,7 +3,7 @@
 
 <beans>
 
-	<bean id="listBandsController" class="com.joshdrummond.liverecordingreview.controller.ListBandsController">
+	<bean id="listArtistsController" class="com.joshdrummond.liverecordingreview.controller.ListArtistsController">
 		<property name="recordingService">
 			<ref bean="recordingService"/>
 		</property>
@@ -51,15 +51,39 @@
 			<ref bean="reviewValidator"/>
 		</property>
 	</bean>
+
+	<bean id="recordingValidator" class="com.joshdrummond.liverecordingreview.validator.RecordingValidator"/>
+
+	<bean id="addRecordingController" class="com.joshdrummond.liverecordingreview.controller.AddRecordingController">
+		<property name="recordingService">
+			<ref bean="recordingService"/>
+		</property>
+		<property name="formView">
+			<value>addRecordingForm</value>
+		</property>
+		<property name="successView">
+			<value>redirect:recordingList.htm</value>
+		</property>
+		<property name="commandName">
+			<value>recording</value>
+		</property>
+		<property name="commandClass">
+			<value>com.joshdrummond.liverecordingreview.model.Recording</value>
+		</property>
+		<property name="validator">
+			<ref bean="recordingValidator"/>
+		</property>
+	</bean>
 	
 	<bean id="simpleUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 		<property name="mappings">
 			<props>
-				<prop key="/bandList.htm">listBandsController</prop>
+				<prop key="/artistList.htm">listArtistsController</prop>
 				<prop key="/categoryList.htm">listCategoriesController</prop>
 				<prop key="/recordingList.htm">listRecordingsController</prop>
 				<prop key="/reviewList.htm">listReviewsController</prop>
 				<prop key="/addReview.htm">addReviewController</prop>
+				<prop key="/addRecording.htm">addRecordingController</prop>
 				<prop key="/faq.htm">faqController</prop>
 			</props>
 		</property>
