@@ -2,8 +2,8 @@
 
 <table width="95%">
 	<tr>
-		<td align="left"><b><a href="bandList.htm">Home</a> =&gt; <a
-			href="categoryList.htm?id=${category.band.id}">${category.band.description}</a> =&gt;
+		<td align="left"><b><a href="artistList.htm">Home</a> =&gt; <a
+			href="categoryList.htm?id=${category.artist.id}">${category.artist.description}</a> =&gt;
 		${category.description}</b></td>
 	</tr>
 	<tr>
@@ -32,6 +32,9 @@
 					<td>&nbsp;<a href="addReview.htm?id=${recording.id}">Add</a></td>
 				</tr>
 			</c:forEach>
+			<tr class="medium">
+				<td colspan="7"><b><a href="addRecording.htm?id=${category.id}">Add Recording</a></b></td>
+			</tr>
 		</table>
 		</td>
 	</tr>

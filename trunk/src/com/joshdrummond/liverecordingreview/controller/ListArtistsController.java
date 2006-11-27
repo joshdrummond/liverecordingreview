@@ -15,12 +15,12 @@ import com.joshdrummond.liverecordingreview.service.RecordingService;
  * @author josh
  *
  */
-public class ListBandsController implements Controller
+public class ListArtistsController implements Controller
 {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
         throws Exception
     {
-        return new ModelAndView("bandList", "bands", recordingService.getBands());
+        return new ModelAndView("artistList", "artists", recordingService.getArtists());
     }
 
     private RecordingService recordingService;

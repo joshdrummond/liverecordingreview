@@ -8,11 +8,11 @@
 		<td>
 		<table class="light" width="100%">
 			<tr class="medium">
-				<td width="40%"><b>Bands</b></td>
+				<td width="40%"><b>Artists</b></td>
 			</tr>
-			<c:forEach var="band" items="${bands}">
+			<c:forEach var="artist" items="${artists}">
 				<tr class="light">
-					<td width="40%">&nbsp;<a href="categoryList.htm?id=${band.id}">${band.description}</a></td>
+					<td width="40%">&nbsp;<a href="categoryList.htm?id=${artist.id}">${artist.description}</a></td>
 				</tr>
 			</c:forEach>
 		</table>

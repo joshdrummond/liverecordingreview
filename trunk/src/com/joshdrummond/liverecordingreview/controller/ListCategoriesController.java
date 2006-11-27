@@ -30,7 +30,7 @@ public class ListCategoriesController extends AbstractCommandController
         GetListCommand listCommand = (GetListCommand)command;
         ModelAndView mav = new ModelAndView("categoryList");
         mav.addObject("categories", recordingService.getCategories(listCommand.getId()));
-        mav.addObject("band", recordingService.getBand(listCommand.getId()));
+        mav.addObject("artist", recordingService.getArtist(listCommand.getId()));
         return mav;
     }
 

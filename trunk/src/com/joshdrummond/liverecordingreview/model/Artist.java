@@ -7,7 +7,7 @@ package com.joshdrummond.liverecordingreview.model;
  * @author josh
  * 
  */
-public class Band
+public class Artist
 {
     private int id;
     private String description;
@@ -74,7 +74,7 @@ public class Band
             return false;
         if (getClass() != obj.getClass())
             return false;
-        final Band other = (Band) obj;
+        final Artist other = (Artist) obj;
         if (this.id != other.id)
             return false;
         return true;

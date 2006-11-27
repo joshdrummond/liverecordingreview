@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.joshdrummond.liverecordingreview.BootlegBean;
-import com.joshdrummond.liverecordingreview.model.Band;
+import com.joshdrummond.liverecordingreview.model.Artist;
 import com.joshdrummond.liverecordingreview.model.Category;
 import com.joshdrummond.liverecordingreview.model.Recording;
 import com.joshdrummond.liverecordingreview.model.Review;
@@ -19,49 +19,49 @@ import com.joshdrummond.liverecordingreview.model.Review;
 public class RecordingService
 {
     /**
-     * Get all Bands
+     * Get all Artists
      * @return
      */
-    public List<Band> getBands()
+    public List<Artist> getArtists()
     {
-        List<Band> bands = new ArrayList<Band>();
-        List<List<String>> results = BootlegBean.getBands();
+        List<Artist> artists = new ArrayList<Artist>();
+        List<List<String>> results = BootlegBean.getArtists();
         for (List<String> row : results)
         {
-            Band band = new Band();
-            band.setId(Integer.parseInt(row.get(0)));
-            band.setDescription(row.get(1));
-            bands.add(band);
+            Artist artist = new Artist();
+            artist.setId(Integer.parseInt(row.get(0)));
+            artist.setDescription(row.get(1));
+            artists.add(artist);
         }
-        return bands;
+        return artists;
     }
 
     /**
-     * Get specified Band detail
-     * @param bandId
+     * Get specified Artist detail
+     * @param artistId
      * @return
      */
-    public Band getBand(int bandId)
+    public Artist getArtist(int artistId)
     {
-        //get the band
-        List<List<String>> results = BootlegBean.getBand(bandId);
-        Band band = new Band();
-        band.setId(bandId);
-        band.setDescription(results.get(0).get(0));
-        return band;
+        //get the artist
+        List<List<String>> results = BootlegBean.getArtist(artistId);
+        Artist artist = new Artist();
+        artist.setId(artistId);
+        artist.setDescription(results.get(0).get(0));
+        return artist;
     }
     
     /**
-     * Get all Categories of a specified Band
-     * @param bandId
+     * Get all Categories of a specified Artist
+     * @param artistId
      * @return
      */
-    public List<Category> getCategories(int bandId)
+    public List<Category> getCategories(int artistId)
     {
         List<Category> categories = new ArrayList<Category>();
 
         //get the categories
-        List<List<String>> results = BootlegBean.getCategories(bandId);
+        List<List<String>> results = BootlegBean.getCategories(artistId);
         for (List<String> row : results)
         {
             Category category = new Category();
@@ -84,10 +84,10 @@ public class RecordingService
         Category category = new Category();
         category.setId(categoryId);
         category.setDescription(results.get(0).get(0));
-        Band band = new Band();
-        band.setId(Integer.parseInt(results.get(0).get(1)));
-        band.setDescription(results.get(0).get(2));
-        category.setBand(band);
+        Artist artist = new Artist();
+        artist.setId(Integer.parseInt(results.get(0).get(1)));
+        artist.setDescription(results.get(0).get(2));
+        category.setArtist(artist);
         return category;        
     }
 
@@ -135,13 +135,13 @@ public class RecordingService
         recording.setAvgPerformanceRating(Float.parseFloat(results.get(0).get(9)));
         recording.setAvgRecordingRating(Float.parseFloat(results.get(0).get(10)));
         recording.setTotalReviews(Integer.parseInt(results.get(0).get(11)));
-        Band band = new Band();
-        band.setId(Integer.parseInt(results.get(0).get(3)));
-        band.setDescription(results.get(0).get(4));
+        Artist artist = new Artist();
+        artist.setId(Integer.parseInt(results.get(0).get(3)));
+        artist.setDescription(results.get(0).get(4));
         Category category = new Category();
         category.setId(Integer.parseInt(results.get(0).get(1)));
         category.setDescription(results.get(0).get(2));
-        category.setBand(band);
+        category.setArtist(artist);
         recording.setCategory(category);
         return recording;
     }
@@ -175,5 +175,10 @@ public class RecordingService
     public boolean addReview(Review review)
     {
         return BootlegBean.addReview(review.getRecording().getId(), review.getReviewer(), review.getPerformanceRating(), review.getRecordingRating(), review.getNotes());
+    }
+    
+    public boolean addRecording(Recording recording)
+    {
+        return BootlegBean.addRecording(recording.getCategory().getId(), recording.getTypeCode(), recording.getDescription(), recording.getSource(), recording.getInfo());
     }
 }

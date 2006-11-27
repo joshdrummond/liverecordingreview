@@ -2,8 +2,8 @@
 
 <table width="95%">
 	<tr>
-		<td align="left"><b><a href="bandList.htm">Home</a> =&gt; <a
-			href="categoryList.htm?id=${recording.category.band.id}">${recording.category.band.description}</a> =&gt; <a
+		<td align="left"><b><a href="artistList.htm">Home</a> =&gt; <a
+			href="categoryList.htm?id=${recording.category.artist.id}">${recording.category.artist.description}</a> =&gt; <a
 			href="recordingList.htm?id=${recording.category.id}">${recording.category.description}</a>
 		=&gt; ${recording.description}</b></td>
 	</tr>
