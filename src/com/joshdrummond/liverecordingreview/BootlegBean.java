@@ -13,20 +13,24 @@ import java.util.*;
 
 
 /*
-create table bands (band_id int not null auto_increment primary key, description varchar(50) not null)
-create table categories (category_id int not null auto_increment primary key, band_id int not null, description varchar(50) not null)
-create table recordings (recording_id int not null auto_increment primary key, category_id int not null, type char(1) not null, description varchar(100) not null, source varchar(50) not null, info text not null, avg_perf_rating float not null, avg_rec_rating float not null, total_reviews int not null, date_created datetime not null)
-create table reviews (review_id int not null auto_increment primary key, recording_id int not null, user_id varchar(50) not null, performance_rating int not null, recording_rating int not null, notes text not null, date_created datetime not null)
+create table artists (artist_id int(11) not null auto_increment primary key, description varchar(50) not null)
+create table categories (category_id int(11) not null auto_increment primary key, artist_id int(11) not null, description varchar(50) not null)
+create table recordings (recording_id int(11) not null auto_increment primary key, category_id int(11) not null, type char(1) not null, description varchar(100) not null, source varchar(50) not null, info text not null, avg_perf_rating float not null, avg_rec_rating float not null, total_reviews int(11) not null, date_created datetime not null)
+create table reviews (review_id int(11) not null auto_increment primary key, recording_id int(11) not null, user_id varchar(50) not null, performance_rating int not null, recording_rating int not null, notes text not null, date_created datetime not null)
+insert into artists values (null, 'Garbage')
+insert into categories values (null, 1, '1995')
+insert into categories values (null, 1, '1998-1999')
+insert into categories values (null, 1, '2002')
+insert into categories values (null, 1, '2005')
+insert into artists values (null, 'Beatles')
+insert into categories values (null, 2, '1961-1966')
+insert into categories values (null, 2, '1967-1970')
 
-//bands (band_id int, description varchar(50))
-//categories (cat_id int, band_id int, description varchar(50))
-//bootlegs (boot_id int, cat_id int, date datetime, description varchar(100), type varchar(10), source varchar(50), info text)
-//reviews (review_id int, user_id varchar(50), boot_id int, perf_score int, rec_score int, notes text)
 //
 //admin
-//add bootleg
+//add recording
 //add category
-//add band
+//add artist
 //
 //reports
 //top overall
@@ -38,9 +42,9 @@ create table reviews (review_id int not null auto_increment primary key, recordi
 //
 //list categories, #count (select c.description,
 //
-//category detail (list all bootlegs with avg scores)
+//category detail (list all recordings with avg scores)
 //
-//bootleg detail (list details and all reviews, submit new review)
+//recording detail (list details and all reviews, submit new review)
 
 */
 
@@ -71,23 +75,23 @@ public class BootlegBean
 
    public static List<List<String>> getArtists()
    {
-      return selectSQL("SELECT b.band_id, b.description FROM bands b ORDER BY b.description");
+      return selectSQL("SELECT a.artist_id, a.description FROM artists a ORDER BY a.description");
    }
 
    public static List<List<String>> getArtist(int id)
    {
-      return selectSQL("SELECT b.description FROM bands b WHERE b.band_id="+id);
+      return selectSQL("SELECT a.description FROM artists a WHERE a.artist_id="+id);
    }
    
    public static List<List<String>> getCategories(int artistId)
    {
-      return selectSQL("SELECT c.category_id, c.description FROM categories c WHERE c.band_id=" + artistId + " ORDER BY c.description");
+      return selectSQL("SELECT c.category_id, c.description FROM categories c WHERE c.artist_id=" + artistId + " ORDER BY c.description");
    }
 
    
    public static List<List<String>> getCategory(int categoryId)
    {
-     return selectSQL("SELECT c.description, b.band_id, b.description FROM categories c, bands b WHERE c.category_id=" + categoryId + " AND c.band_id=b.band_id");
+     return selectSQL("SELECT c.description, a.artist_id, a.description FROM categories c, artists a WHERE c.category_id=" + categoryId + " AND c.artist_id=a.artist_id");
    }
 
    public static List<List<String>> getRecordings(int categoryId)
@@ -98,8 +102,8 @@ public class BootlegBean
 
    public static List<List<String>> getRecording(int recordingId)
    {
-         return selectSQL("SELECT r.recording_id, r.category_id, c.description, c.band_id, b.description, r.type, r.description, r.source, r.info, r.avg_perf_rating, r.avg_rec_rating, r.total_reviews " +
-                "FROM recordings r, categories c, bands b WHERE r.recording_id=" + recordingId + " AND r.category_id=c.category_id and c.band_id=b.band_id");
+         return selectSQL("SELECT r.recording_id, r.category_id, c.description, c.artist_id, a.description, r.type, r.description, r.source, r.info, r.avg_perf_rating, r.avg_rec_rating, r.total_reviews " +
+                "FROM recordings r, categories c, artists a WHERE r.recording_id=" + recordingId + " AND r.category_id=c.category_id and c.artist_id=a.artist_id");
    }
 
    public static List<List<String>> getReviews(int recordingId)
