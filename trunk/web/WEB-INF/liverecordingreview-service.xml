@@ -3,8 +3,11 @@
 
 <beans>
 	<bean id="recordingService" class="com.joshdrummond.liverecordingreview.service.RecordingService">
-		<property name="hibernateTemplate">
+	 	<property name="hibernateTemplate">
 			<ref bean="hibernateTemplate"/>
+		</property>
+	 	<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
 		</property>
 	</bean>
 
