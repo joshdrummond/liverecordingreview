@@ -6,6 +6,9 @@ package com.joshdrummond.liverecordingreview.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.SessionFactory;
+import org.springframework.orm.hibernate3.HibernateTemplate;
+
 import com.joshdrummond.liverecordingreview.BootlegBean;
 import com.joshdrummond.liverecordingreview.model.Artist;
 import com.joshdrummond.liverecordingreview.model.Category;
@@ -18,22 +21,16 @@ import com.joshdrummond.liverecordingreview.model.Review;
  */
 public class RecordingService
 {
+    private HibernateTemplate hibernateTemplate;
+    private SessionFactory sessionFactory;
+    
     /**
      * Get all Artists
      * @return
      */
     public List<Artist> getArtists()
     {
-        List<Artist> artists = new ArrayList<Artist>();
-        List<List<String>> results = BootlegBean.getArtists();
-        for (List<String> row : results)
-        {
-            Artist artist = new Artist();
-            artist.setId(Integer.parseInt(row.get(0)));
-            artist.setDescription(row.get(1));
-            artists.add(artist);
-        }
-        return artists;
+        return hibernateTemplate.find("from Artist a order by a.description asc");
     }
 
     /**
@@ -43,12 +40,7 @@ public class RecordingService
      */
     public Artist getArtist(int artistId)
     {
-        //get the artist
-        List<List<String>> results = BootlegBean.getArtist(artistId);
-        Artist artist = new Artist();
-        artist.setId(artistId);
-        artist.setDescription(results.get(0).get(0));
-        return artist;
+        return (Artist)hibernateTemplate.get(Artist.class, artistId);
     }
     
     /**
@@ -180,5 +172,37 @@ public class RecordingService
     public boolean addRecording(Recording recording)
     {
         return BootlegBean.addRecording(recording.getCategory().getId(), recording.getTypeCode(), recording.getDescription(), recording.getSource(), recording.getInfo());
+    }
+
+    /**
+     * @return the hibernateTemplate
+     */
+    public HibernateTemplate getHibernateTemplate()
+    {
+        return this.hibernateTemplate;
+    }
+
+    /**
+     * @param hibernateTemplate the hibernateTemplate to set
+     */
+    public void setHibernateTemplate(HibernateTemplate hibernateTemplate)
+    {
+        this.hibernateTemplate = hibernateTemplate;
+    }
+
+    /**
+     * @return the sessionFactory
+     */
+    public SessionFactory getSessionFactory()
+    {
+        return this.sessionFactory;
+    }
+
+    /**
+     * @param sessionFactory the sessionFactory to set
+     */
+    public void setSessionFactory(SessionFactory sessionFactory)
+    {
+        this.sessionFactory = sessionFactory;
     }
 }
