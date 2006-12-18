@@ -19,7 +19,3 @@ lib\
 	mysql-connector-java-3.1.13-bin.jar
 	spring.jar
 	standard.jar
-	
-tld\
-	c.tld
-	fmt.tld

@@ -29,9 +29,14 @@ public class RecordingValidator implements Validator
      */
     public void validate(Object target, Errors errors)
     {
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "required", "Field is required.");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "source", "required", "Field is required.");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "info", "required", "Field is required.");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "required", "Description is required.");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "source", "required", "Source is required.");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "info", "required", "Info is required.");
+        Recording recording = (Recording)target;
+        if ((recording.getTypeCode() != 'A') && (recording.getTypeCode() != 'V'))
+        {
+            errors.rejectValue("typeCode", "invalid", "Type is invalid.");
+        }
     }
 
 }
