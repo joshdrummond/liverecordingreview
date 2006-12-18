@@ -29,8 +29,7 @@ public class AddReviewController extends SimpleFormController
         throws Exception
     {
         Review review = (Review)command;
-        if (!recordingService.addReview(review))
-            throw new Exception("unable to add review");
+        recordingService.addReview(review);
         return new ModelAndView(getSuccessView(), "id", review.getRecording().getId());
     }
     

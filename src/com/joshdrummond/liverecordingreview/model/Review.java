@@ -3,6 +3,8 @@
  */
 package com.joshdrummond.liverecordingreview.model;
 
+import java.util.Date;
+
 /**
  * @author josh
  * 
@@ -15,12 +17,12 @@ public class Review
     private int performanceRating;
     private int recordingRating;
     private String notes;
-    private String dateCreated;
+    private Date dateCreated;
 
     /**
      * @return the dateCreated
      */
-    public String getDateCreated()
+    public Date getDateCreated()
     {
         return this.dateCreated;
     }
@@ -28,7 +30,7 @@ public class Review
     /**
      * @param dateCreated the dateCreated to set
      */
-    public void setDateCreated(String dateCreated)
+    public void setDateCreated(Date dateCreated)
     {
         this.dateCreated = dateCreated;
     }

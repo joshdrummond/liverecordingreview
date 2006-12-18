@@ -13,7 +13,7 @@ public class Category
     private int id;
     private Artist artist;
     private String description;
-
+    
     /**
      * @return the artist
      */

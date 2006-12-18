@@ -3,6 +3,8 @@
  */
 package com.joshdrummond.liverecordingreview.model;
 
+import java.util.List;
+
 /**
  * @author josh
  * 
