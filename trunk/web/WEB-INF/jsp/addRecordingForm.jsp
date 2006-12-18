@@ -23,7 +23,8 @@
 						</tr>
 						<tr>
 							<td>Type:</td>
-							<td><form:select items="${typeCodes}" path="typeCode" /></td>
+							<td><form:select items="${typeCodes}" path="typeCode" />&nbsp;&nbsp;
+								<form:errors path="typeCode" cssClass="error"/></td>
 						</tr>
 						<tr>
 							<td>Source:</td>

@@ -29,8 +29,18 @@ public class ReviewValidator implements Validator
      */
     public void validate(Object target, Errors errors)
     {
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "reviewer", "required", "Field is required.");
-        
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "reviewer", "required", "Reviewer is required.");
+        Review review = (Review)target;
+        if (review.getPerformanceRating() > 10 ||
+                review.getPerformanceRating() < 1)
+        {
+            errors.rejectValue("performanceRating", "numberRange", "Rating must be between 1 and 10.");
+        }
+        if (review.getRecordingRating() > 10 ||
+                review.getRecordingRating() < 1)
+        {
+            errors.rejectValue("recordingRating", "numberRange", "Rating must be between 1 and 10.");
+        }       
     }
 
 }

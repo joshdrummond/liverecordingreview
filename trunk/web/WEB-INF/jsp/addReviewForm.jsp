@@ -5,18 +5,18 @@
 		<td align="left"><b><a href="artistList.htm">Home</a> =&gt; <a
 			href="categoryList.htm?id=${recording.category.artist.id}">${recording.category.artist.description}</a> =&gt; <a
 			href="recordingList.htm?id=${recording.category.id}">${recording.category.description}</a>
-		=&gt; <a href="reviewList.htm?id=${recording.id}">${recording.description}</a> =&gt; Add Review</b></td>
+		=&gt; <a href="reviewList.htm?id=${recording.id}">${fn:escapeXml(recording.description)}</a> =&gt; Add Review</b></td>
 	</tr>
 	<tr>
 		<td>
 		<table class="light" width="100%">
 			<tr class="medium">
-				<td width="40%"><b>${recording.description}<br/>
+				<td width="40%"><b>${fn:escapeXml(recording.description)}<br/>
 				${recording.type}<br/>
-				${recording.source}</b></td>
+				${fn:escapeXml(recording.source)}</b></td>
 			</tr>
 			<tr class="light">
-				<td><pre>${recording.info}</pre></td>
+				<td><pre>${fn:escapeXml(recording.info)}</pre></td>
 			</tr>
 			<tr class="medium">
 				<td><b>Average Performance Rating:</b>
@@ -56,10 +56,12 @@
 					href="faq.htm"
 					onClick="javascript:window.open('faq.htm', 'Help', 'top=100,left=100,width=600,height=500,toolbar=1,menubar=1'); return false;">Help</a>)</td>
 				<td width="30%">Performance &nbsp;&nbsp;
-				<form:select items="${ratings}" path="performanceRating"/>
+				<form:select items="${ratings}" path="performanceRating"/><br/>
+				<form:errors path="performanceRating" cssClass="error"/>
 				</td>
 				<td width="30%">Recording &nbsp;&nbsp;
-				<form:select items="${ratings}" path="recordingRating"/>
+				<form:select items="${ratings}" path="recordingRating"/><br/>
+				<form:errors path="recordingRating" cssClass="error"/>
 				</td>
 			</tr>
 			<tr>

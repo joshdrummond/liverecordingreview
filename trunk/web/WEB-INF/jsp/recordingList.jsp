@@ -23,9 +23,9 @@
 			</tr>
 			<c:forEach var="recording" items="${recordings}">
 				<tr class="light">
-					<td>&nbsp;<a href="reviewList.htm?id=${recording.id}">${recording.description}</a></td>
+					<td>&nbsp;<a href="reviewList.htm?id=${recording.id}">${fn:escapeXml(recording.description)}</a></td>
 					<td>&nbsp;${recording.type}</td>
-					<td>&nbsp;${recording.source}</td>
+					<td>&nbsp;${fn:escapeXml(recording.source)}</td>
 					<td align="right">&nbsp;${recording.totalReviews}</td>
 					<td align="right">&nbsp;<fmt:formatNumber maxFractionDigits="1" minFractionDigits="1">${recording.avgPerformanceRating}</fmt:formatNumber></td>
 					<td align=right>&nbsp;<fmt:formatNumber maxFractionDigits="1" minFractionDigits="1">${recording.avgRecordingRating}</fmt:formatNumber></td>

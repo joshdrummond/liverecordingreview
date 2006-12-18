@@ -5,18 +5,18 @@
 		<td align="left"><b><a href="artistList.htm">Home</a> =&gt; <a
 			href="categoryList.htm?id=${recording.category.artist.id}">${recording.category.artist.description}</a> =&gt; <a
 			href="recordingList.htm?id=${recording.category.id}">${recording.category.description}</a>
-		=&gt; ${recording.description}</b></td>
+		=&gt; ${fn:escapeXml(recording.description)}</b></td>
 	</tr>
 	<tr>
 		<td>
 		<table class="light" width="100%">
 			<tr class="medium">
-				<td width="40%"><b>${recording.description}<br/>
+				<td width="40%"><b>${fn:escapeXml(recording.description)}<br/>
 				${recording.type}<br/>
-				${recording.source}</b></td>
+				${fn:escapeXml(recording.source)}</b></td>
 			</tr>
 			<tr class="light">
-				<td><pre>${recording.info}</pre></td>
+				<td><pre>${fn:escapeXml(recording.info)}</pre></td>
 			</tr>
 			<tr class="medium">
 				<td><b>Average Performance Rating:</b>
@@ -52,14 +52,14 @@
 					</c:otherwise>
 				</c:choose>
 				<tr class="${reviewrowstyle}">
-				<td><b>${review.reviewer}</b><br/>
+				<td><b>${fn:escapeXml(review.reviewer)}</b><br/>
 			<%--	<fmt:parseDate value="${review.dateCreated}" var="dateCreated" type="both" pattern="yyyy-MM-dd HH:mm:ss"/> --%>
 				<fmt:formatDate value="${review.dateCreated}" type="both" pattern="MM/dd/yyyy HH:mm:ss"/></td>
 				<td>Performance: ${review.performanceRating}<br/>
 				Recording: ${review.recordingRating}</td>
 				</tr>
 				<tr class="${reviewrowstyle}">
-					<td colspan="2">${review.notes}&nbsp;</td>
+					<td colspan="2">${fn:escapeXml(review.notes)}&nbsp;</td>
 				</tr>
 			</c:forEach>
 		</table>
