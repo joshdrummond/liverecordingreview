@@ -3,6 +3,8 @@
  */
 package com.joshdrummond.liverecordingreview.model;
 
+import java.util.Date;
+
 /**
  * @author josh
  * 
@@ -18,6 +20,23 @@ public class Recording
     private float avgPerformanceRating;
     private float avgRecordingRating;
     private int totalReviews;
+    private Date dateCreated;
+
+    /**
+     * @return the dateCreated
+     */
+    public Date getDateCreated()
+    {
+        return this.dateCreated;
+    }
+
+    /**
+     * @param dateCreated the dateCreated to set
+     */
+    public void setDateCreated(Date dateCreated)
+    {
+        this.dateCreated = dateCreated;
+    }
 
     /**
      * @return the avgPerformanceRating

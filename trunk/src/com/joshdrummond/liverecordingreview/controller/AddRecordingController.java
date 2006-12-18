@@ -25,8 +25,7 @@ public class AddRecordingController extends SimpleFormController
         throws Exception
     {
         Recording recording = (Recording)command;
-        if (!recordingService.addRecording(recording))
-            throw new Exception("unable to add recording");
+        recordingService.addRecording(recording);
         return new ModelAndView(getSuccessView(), "id", recording.getCategory().getId());
     }
     

@@ -53,8 +53,8 @@
 				</c:choose>
 				<tr class="${reviewrowstyle}">
 				<td><b>${review.reviewer}</b><br/>
-				<fmt:parseDate value="${review.dateCreated}" var="dateCreated" type="both" pattern="yyyy-MM-dd HH:mm:ss"/>
-				<fmt:formatDate value="${dateCreated}" type="both" pattern="MM/dd/yyyy HH:mm:ss"/></td>
+			<%--	<fmt:parseDate value="${review.dateCreated}" var="dateCreated" type="both" pattern="yyyy-MM-dd HH:mm:ss"/> --%>
+				<fmt:formatDate value="${review.dateCreated}" type="both" pattern="MM/dd/yyyy HH:mm:ss"/></td>
 				<td>Performance: ${review.performanceRating}<br/>
 				Recording: ${review.recordingRating}</td>
 				</tr>

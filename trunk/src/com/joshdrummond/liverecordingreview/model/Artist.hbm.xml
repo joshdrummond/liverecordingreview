@@ -9,5 +9,11 @@
             <generator class="native"/>
         </id>
         <property name="description"/>
+        <!-- 
+        <bag name="categories" table="categories" order-by="description asc" lazy="true">
+        	<key column="artist_id"/>
+        	<one-to-many class="com.joshdrummond.liverecordingreview.model.Category"/>
+        </bag>
+         -->
     </class>
 </hibernate-mapping>

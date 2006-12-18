@@ -3,13 +3,11 @@
  */
 package com.joshdrummond.liverecordingreview.service;
 
-import java.util.ArrayList;
-import java.util.List;
 
+import java.util.Date;
+import java.util.List;
 import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.HibernateTemplate;
-
-import com.joshdrummond.liverecordingreview.BootlegBean;
 import com.joshdrummond.liverecordingreview.model.Artist;
 import com.joshdrummond.liverecordingreview.model.Category;
 import com.joshdrummond.liverecordingreview.model.Recording;
@@ -30,7 +28,7 @@ public class RecordingService
      */
     public List<Artist> getArtists()
     {
-        return hibernateTemplate.find("from Artist a order by a.description asc");
+        return hibernateTemplate.find("from Artist order by description");
     }
 
     /**
@@ -45,24 +43,12 @@ public class RecordingService
     
     /**
      * Get all Categories of a specified Artist
-     * @param artistId
+     * @param artist
      * @return
      */
-    public List<Category> getCategories(int artistId)
+    public List<Category> getCategories(Artist artist)
     {
-        List<Category> categories = new ArrayList<Category>();
-
-        //get the categories
-        List<List<String>> results = BootlegBean.getCategories(artistId);
-        for (List<String> row : results)
-        {
-            Category category = new Category();
-            category.setId(Integer.parseInt(row.get(0)));
-            category.setDescription(row.get(1));
-            categories.add(category);
-        }
-        
-        return categories;
+        return hibernateTemplate.find("from Category where artist=? order by description", artist);
     }
     
     /**
@@ -72,42 +58,17 @@ public class RecordingService
      */
     public Category getCategory(int categoryId)
     {
-        List<List<String>> results = BootlegBean.getCategory(categoryId);
-        Category category = new Category();
-        category.setId(categoryId);
-        category.setDescription(results.get(0).get(0));
-        Artist artist = new Artist();
-        artist.setId(Integer.parseInt(results.get(0).get(1)));
-        artist.setDescription(results.get(0).get(2));
-        category.setArtist(artist);
-        return category;        
+        return (Category)hibernateTemplate.find("from Category category left join fetch category.artist where category.id=?", categoryId).get(0);
     }
 
     /**
      * Get all Recordings of a specified Category
-     * @param categoryId
+     * @param category
      * @return
      */
-    public List<Recording> getRecordings(int categoryId)
+    public List<Recording> getRecordings(Category category)
     {
-        List<Recording> recordings = new ArrayList<Recording>();
-
-        //get the recordings
-        List<List<String>> results = BootlegBean.getRecordings(categoryId);
-        for (List<String> row : results)
-        {
-            Recording recording = new Recording();
-            recording.setId(Integer.parseInt(row.get(0)));
-            recording.setTypeCode((row.get(1)).charAt(0));
-            recording.setDescription(row.get(2));
-            recording.setSource(row.get(3));
-            recording.setAvgPerformanceRating(Float.parseFloat(row.get(4)));
-            recording.setAvgRecordingRating(Float.parseFloat(row.get(5)));
-            recording.setTotalReviews(Integer.parseInt(row.get(6)));
-            recordings.add(recording);
-        }
-        
-        return recordings;
+        return hibernateTemplate.find("from Recording where category=? order by description, typeCode, source", category);
     }
     
     /**
@@ -117,61 +78,66 @@ public class RecordingService
      */
     public Recording getRecording(int recordingId)
     {
-        List<List<String>> results = BootlegBean.getRecording(recordingId);
-        Recording recording = new Recording();
-        recording.setId(recordingId);
-        recording.setDescription(results.get(0).get(6));
-        recording.setTypeCode((results.get(0).get(5)).charAt(0));
-        recording.setSource(results.get(0).get(7));
-        recording.setInfo(results.get(0).get(8));
-        recording.setAvgPerformanceRating(Float.parseFloat(results.get(0).get(9)));
-        recording.setAvgRecordingRating(Float.parseFloat(results.get(0).get(10)));
-        recording.setTotalReviews(Integer.parseInt(results.get(0).get(11)));
-        Artist artist = new Artist();
-        artist.setId(Integer.parseInt(results.get(0).get(3)));
-        artist.setDescription(results.get(0).get(4));
-        Category category = new Category();
-        category.setId(Integer.parseInt(results.get(0).get(1)));
-        category.setDescription(results.get(0).get(2));
-        category.setArtist(artist);
-        recording.setCategory(category);
-        return recording;
+        return (Recording)hibernateTemplate.find("from Recording recording left join fetch recording.category left join fetch recording.category.artist where recording.id=?", recordingId).get(0);
     }
     
     /**
      * Get all Reviews of a specified Recording
-     * @param recordingId
+     * @param recording
      * @return
      */
-    public List<Review> getReviews(int recordingId)
+    public List<Review> getReviews(Recording recording)
     {
-        List<Review> reviews = new ArrayList<Review>();
-
-        //get the recordings
-        List<List<String>> results = BootlegBean.getReviews(recordingId);
-        for (List<String> row : results)
+        return hibernateTemplate.find("from Review where recording=? order by dateCreated", recording);
+    }
+    
+    /**
+     * Add the specified Recording
+     * @param recording
+     */
+    public void addRecording(Recording recording)
+    {
+        recording.setDateCreated(new Date());
+        hibernateTemplate.save(recording);
+    }
+    
+    /**
+     * Add the specified Review and recalculate it's Recording's various scores
+     * @param review
+     */
+    public void addReview(Review review)
+    {
+        review.setDateCreated(new Date());
+        hibernateTemplate.save(review);
+        recalculateRecordingScore(review.getRecording());
+    }
+    
+    /**
+     * Recalculate total reviews, average performance and recording scores of specified Recording
+     * @param recording
+     */
+    public void recalculateRecordingScore(Recording recording)
+    {
+        recording = (Recording)hibernateTemplate.get(Recording.class, recording.getId());
+        List results = hibernateTemplate.find("select count(*), sum(performanceRating), sum(recordingRating) from Review where recording=?", recording);
+        if (!results.isEmpty())
         {
-            Review review = new Review();
-            review.setId(Integer.parseInt(row.get(0)));
-            review.setReviewer(row.get(1));
-            review.setPerformanceRating(Integer.parseInt(row.get(2)));
-            review.setRecordingRating(Integer.parseInt(row.get(3)));
-            review.setNotes(row.get(4));
-            review.setDateCreated(row.get(5));
-            reviews.add(review);
+            Object[] res = (Object[])results.get(0);
+            float reviewCount = (Long)res[0];
+            float reviewSumPerformanceRating = (Long)res[1];
+            float reviewSumRecordingRating = (Long)res[2];
+            float reviewAvgPerformanceRating = 0;
+            float reviewAvgRecordingRating = 0;
+            if (reviewCount > 0)
+            {
+                reviewAvgPerformanceRating = reviewSumPerformanceRating / reviewCount;
+                reviewAvgRecordingRating = reviewSumRecordingRating / reviewCount;
+            }
+            recording.setAvgPerformanceRating(reviewAvgPerformanceRating);
+            recording.setAvgRecordingRating(reviewAvgRecordingRating);
+            recording.setTotalReviews((int)reviewCount);
+            hibernateTemplate.saveOrUpdate(recording);
         }
-        
-        return reviews;
-    }
-    
-    public boolean addReview(Review review)
-    {
-        return BootlegBean.addReview(review.getRecording().getId(), review.getReviewer(), review.getPerformanceRating(), review.getRecordingRating(), review.getNotes());
-    }
-    
-    public boolean addRecording(Recording recording)
-    {
-        return BootlegBean.addRecording(recording.getCategory().getId(), recording.getTypeCode(), recording.getDescription(), recording.getSource(), recording.getInfo());
     }
 
     /**

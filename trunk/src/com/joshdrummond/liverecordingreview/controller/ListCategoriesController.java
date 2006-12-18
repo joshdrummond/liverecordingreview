@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractCommandController;
-import com.joshdrummond.liverecordingreview.command.GetListCommand;
+import com.joshdrummond.liverecordingreview.model.Artist;
 import com.joshdrummond.liverecordingreview.service.RecordingService;
 
 /**
@@ -20,17 +20,18 @@ public class ListCategoriesController extends AbstractCommandController
 {
     public ListCategoriesController()
     {
-        setCommandClass(GetListCommand.class);
+        setCommandClass(Artist.class);
     }
 
     public ModelAndView handle(HttpServletRequest request, HttpServletResponse response,
             Object command, BindException errors)
         throws Exception
     {
-        GetListCommand listCommand = (GetListCommand)command;
+        //GetListCommand listCommand = (GetListCommand)command;
+        Artist artist = (Artist)command;
         ModelAndView mav = new ModelAndView("categoryList");
-        mav.addObject("categories", recordingService.getCategories(listCommand.getId()));
-        mav.addObject("artist", recordingService.getArtist(listCommand.getId()));
+        mav.addObject("categories", recordingService.getCategories(artist));
+        mav.addObject("artist", recordingService.getArtist(artist.getId()));
         return mav;
     }
 
