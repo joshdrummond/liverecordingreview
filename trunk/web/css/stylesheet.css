@@ -18,19 +18,20 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-body { background-color: #009933; font-family: Arial, Times New Roman; font-size: 12px; }
-table.light { background-color: #66FF66; border-width: 1; border-style: groove}
-table.medium { background-color: #33FF33; border-width: 1; border-style: groove}
-tr.dark { background-color: #339933 }
-tr.medium { background-color: #33FF33 }
-tr.light { background-color: #66FF66 }
-tr.review1 { background-color: #33FF33 }
-tr.review2 { background-color: #339933 }
+body { background-color: #F9FFF0; font-family: Arial, "Times New Roman"; font-size: 12px;
+color: #666666; }
+table.light { background-color: #E5F1CF; border: 1px solid #99CC99; }
+table.medium { background-color: #DDF3B6; border: 1px solid #99CC99; }
+tr.dark { background-color: #ACCC60; }
+tr.medium { background-color: #CDE79F; }
+tr.light { background-color: #EEFFCC; }
+tr.review1 { background-color: #33FF33; }
+tr.review2 { background-color: #339933; }
 td { font-size: 12px; }
 
-h1 { font-size: 24px; }
+h1 { font-size: 24px; color: #333333; }
 h2 { font-size: 20px; }
-a { color: #000000; }
+a { color: #999900; }
 
 .error { color: red }
 .inputField { width:420px; }
