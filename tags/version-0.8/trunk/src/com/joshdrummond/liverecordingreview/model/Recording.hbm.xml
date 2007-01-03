@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.joshdrummond.liverecordingreview.model.Recording" table="recordings">
+        <id name="id" column="recording_id">
+            <generator class="native"/>
+        </id>
+        <many-to-one name="category" 
+        	class="com.joshdrummond.liverecordingreview.model.Category" 
+        	column="category_id"/>
+        <property name="typeCode" column="type" type="character"/>
+        <property name="description"/>
+        <property name="source"/>
+        <property name="info" type="text"/>
+        <property name="avgPerformanceRating" column="avg_perf_rating" type="float"/>
+        <property name="avgRecordingRating" column="avg_rec_rating" type="float"/>
+        <property name="totalReviews" column="total_reviews" type="integer"/>
+        <property name="dateCreated" column="date_created" type="timestamp"/>
+    </class>
+</hibernate-mapping>

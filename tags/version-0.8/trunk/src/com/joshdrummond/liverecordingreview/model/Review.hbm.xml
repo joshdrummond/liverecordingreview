@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.joshdrummond.liverecordingreview.model.Review" table="reviews">
+        <id name="id" column="review_id">
+            <generator class="native"/>
+        </id>
+        <many-to-one name="recording" 
+        	class="com.joshdrummond.liverecordingreview.model.Recording" 
+        	column="recording_id"/>
+        <property name="reviewer" column="user_id"/>
+        <property name="performanceRating" column="performance_rating" type="integer"/>
+        <property name="recordingRating" column="recording_rating" type="integer"/>
+        <property name="notes" type="text"/>
+        <property name="dateCreated" column="date_created" type="timestamp"/>
+    </class>
+</hibernate-mapping>
