@@ -37,17 +37,17 @@
 						<form:hidden path="category.id" />
 						<tr>
 							<td>Description:</td>
-							<td><form:input path="description" />&nbsp;&nbsp;
+							<td><form:input path="description" cssClass="inputField" />&nbsp;&nbsp;
 								<form:errors path="description" cssClass="error"/></td>
 						</tr>
 						<tr>
 							<td>Type:</td>
-							<td><form:select items="${typeCodes}" path="typeCode" />&nbsp;&nbsp;
+							<td><form:select items="${typeCodes}" path="typeCode" cssClass="dropdown" />&nbsp;&nbsp;
 								<form:errors path="typeCode" cssClass="error"/></td>
 						</tr>
 						<tr>
 							<td>Source:</td>
-							<td><form:input path="source" />&nbsp;&nbsp;
+							<td><form:input path="source" cssClass="inputField" />&nbsp;&nbsp;
 								<form:errors path="source" cssClass="error"/></td>
 						</tr>
 						<tr>
