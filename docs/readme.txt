@@ -1,10 +1,21 @@
-Live Recording Rating and Review web site
 
-A Java web application that is a review site for live music recordings (bootleg), 
-where recordings are organized by artist and category, details of recordings are stored, 
-and users can rate and leave comments of the quality of the recording and performance. 
-Implemented using Java JEE, Spring MVC, and Hibernate (your choice of database, i.e. MySQL).
+3rd Party additional install requirements:
 
-Copyright 2006-07 Josh Drummond (www.joshdrummond.com) under GPL 2.0
-
-http://code.google.com/p/liverecordingreview/
+lib\
+	ant-antlr.jar
+	antlr.jar
+	asm-attrs.jar
+	asm.jar
+	cglib.jar
+	commons-collections.jar
+	commons-dbcp.jar
+	commons-logging.jar
+	commons-pool.jar
+	dom4j.jar
+	hibernate3.jar
+	jstl.jar
+	jta.jar
+	log4j.jar
+	mysql-connector-java-3.1.13-bin.jar
+	spring.jar
+	standard.jar
