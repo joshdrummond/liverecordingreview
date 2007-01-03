@@ -16,7 +16,7 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Foobar; if not, write to the Free Software
+    along with LiveRecordingReview; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 -->
 
@@ -33,7 +33,7 @@
 		<property name="dataSource" ref="dataSource"/>
 		<property name="hibernateProperties">
 			<props>
-				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.show_sql">false</prop>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 			</props>

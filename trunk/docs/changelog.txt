@@ -1,20 +1,23 @@
 LiveRecordingReview Change Log:
 
 Version 1.0 2007/01/xx
-	- Hibernate support completely replaces old hardcoded JDBC
-	- Enhancements to service layer
-	- Stronger validation and web application security enhancements (cross-site scripting vulnerability fixed)
+	- Final Spring MVC / Hibernate release version
 	- Improved stylesheet
 	- Improved documentation
 	- Improved Log4J support
 
-Version 0.5 - 2006/11/30
+Version 0.8 - 2006/12/18
+	- Hibernate support completely replaces old hardcoded JDBC
+	- Enhancements to service layer
+	- Stronger validation and web application security enhancements (cross-site scripting vulnerability fixed)
+
+Version 0.5 - 2006/11/27
 	- Refactor from JSP only version to now use Spring MVC, JSTL only JSPs, CSS, controller/model/service layers (but still hardcoded JDBC as DAO)
 	- "Add New Recording" functionality added
 	- Added "reinstall" Ant target
 	- Changed database schema (band to artist, pk types)
 
-Version 0.1 - 2006/09/30
+Version 0.1 - 2006/09/29
 	- Initial import of original JSP & bean only version
 	- Reconfigured with proper build script and directory structure
 	

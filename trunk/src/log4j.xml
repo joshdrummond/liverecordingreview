@@ -16,18 +16,29 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Foobar; if not, write to the Free Software
+    along with LiveRecordingReview; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 -->
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-  <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+
+  <appender name="dailyFile" class="org.apache.log4j.DailyRollingFileAppender">
+  	<param name="File" value="${catalina.base}/logs/liverecordingreview.log" />
+  	<param name="Append" value="true" />
+  	<param name="DatePattern" value="'.'yyyy-MM-dd" />
     <layout class="org.apache.log4j.PatternLayout"> 
-      <param name="ConversionPattern" value="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+      <param name="ConversionPattern" value="%d %-5p [%t]: %m%n"/>
     </layout>
   </appender>
+
+  <category name="org.hibernate.SQL" additivity="false">
+    <priority value="debug"/>
+    <appender-ref ref="dailyFile"/>
+  </category>
+
   <root>
     <priority value="info" />
-    <appender-ref ref="stdout" />
+    <appender-ref ref="dailyFile" />
   </root>
+
 </log4j:configuration>

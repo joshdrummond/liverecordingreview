@@ -1,6 +1,11 @@
-LiveRecordingReview Installation Instructions:
+LiveRecordingReview Installation Instructions
 
-1. 3rd Party library additional install requirements:
+1. Requirements:
+	a. Java 5.0 +
+	b. Java Servlet Container (i.e. Apache Tomcat 5.5+)
+	c. JDBC compatible RDBMS (i.e. MySQL 5.x)
+
+2. Additional 3rd Party library requirements:
 
 WEB-INF/lib/
 	ant-antlr.jar [1]
@@ -22,10 +27,15 @@ WEB-INF/lib/
 	standard.jar [3]
 
 [1] Hibernate 3.2 distribution (http://www.hibernate.org/)
-[2] Spring 2.0 distribution (http://www.springframework.org/)
+[2] Spring 2.0 with dependencies distribution (http://www.springframework.org/)
 [3] Jakarta Standard Taglibs 1.1.2 distribution (http://jakarta.apache.org/taglibs/)
 [4] MySQL Connector/J JDBC distribution (http://dev.mysql.com/downloads/connector/j/3.1.html)
 
-2. Create database of your choice and run docs/init-database.sql script
-3. Edit WEB-INF/liverecordingreview-data.xml to use dataSource url/username/password or your choice and hibernate dialect (if not using MySQL)
-4. Run Ant "install" target to install to Tomcat 5.5.x +
+3. Create database of your choice and run docs/init-database.sql script
+4. Edit WEB-INF/liverecordingreview-data.xml to use dataSource url/username/password or your choice and hibernate dialect (if not using MySQL)
+5. Edit src/log4j.xml to optionally change log file location
+6. Deploy to your servlet container
+	a. If using Tomcat:
+		i. Edit /build.properties and change tomcat properties for your environment
+		ii. Make sure Tomcat Ant jar files are in Ant classpath
+		iii. Run Ant "install" target to install to Tomcat
