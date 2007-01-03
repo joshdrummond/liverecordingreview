@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.joshdrummond.liverecordingreview.model.Artist" table="artists">
+        <id name="id" column="artist_id">
+            <generator class="native"/>
+        </id>
+        <property name="description"/>
+        <!-- 
+        <bag name="categories" table="categories" order-by="description asc" lazy="true">
+        	<key column="artist_id"/>
+        	<one-to-many class="com.joshdrummond.liverecordingreview.model.Category"/>
+        </bag>
+         -->
+    </class>
+</hibernate-mapping>
