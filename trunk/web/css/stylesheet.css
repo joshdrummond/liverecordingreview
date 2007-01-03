@@ -1,9 +1,29 @@
-body { background-color: #8000FF }
-table.light { background-color: #FFD6E6; border-width: 1; border-style: groove}
-table.medium { background-color: #FFB5E7; border-width: 1; border-style: groove}
-tr.dark { background-color: #FFA9E7 }
-tr.medium { background-color: #FFC5E7 }
-tr.light { background-color: #FFD6E6 }
-tr.review1 { background-color: #FF8DA1 }
-tr.review2 { background-color: #FFA7B6 }
+/*
+    Copyright 2006, 2007 Josh Drummond
+
+    This file is part of LiveRecordingReview.
+
+    LiveRecordingReview is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    LiveRecordingReview is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Foobar; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
+
+body { background-color: #009933 }
+table.light { background-color: #66FF66; border-width: 1; border-style: groove}
+table.medium { background-color: #33FF33; border-width: 1; border-style: groove}
+tr.dark { background-color: #339933 }
+tr.medium { background-color: #33FF33 }
+tr.light { background-color: #66FF66 }
+tr.review1 { background-color: #33FF33 }
+tr.review2 { background-color: #339933 }
 .error { color: red }
